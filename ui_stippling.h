@@ -34,13 +34,19 @@ public:
 	QAction *actionLinear;
 	QAction *actionOpti;
 	QAction *actionLoad;
+	QAction *actionLloyd;
     QWidget *centralwidget;
+	QWidget *lld;
+	QWidget *wdg;
     QGridLayout *gridLayout;
-    //GlViewer *viewer;
+	QGridLayout *gridLayoutPic;
+	QGridLayout *gridLayoutLld;
+	GlViewer *viewer;
     QStatusBar *statusbar;
     QMenuBar *menubar;
     QMenu *menuPoints;
 	QMenu *menuPicture;
+	QMenu *menuLloyd;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -66,28 +72,39 @@ public:
 		actionLoad = new QAction(MainWindow);
 		actionLoad->setObjectName(QStringLiteral("actionLoad"));
 
+		//New action : LLoyd
+		actionLloyd = new QAction(MainWindow);
+		actionLloyd->setObjectName(QStringLiteral("actionLloyd"));
+
+
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         gridLayout = new QGridLayout(centralwidget);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-		/*
-        viewer = new GlViewer(centralwidget);
-        viewer->setObjectName(QStringLiteral("viewer"));
-        viewer->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
 
-		gridLayout->addWidget(viewer, 0, 0, 1, 1);
-		*/
+		wdg = new QWidget();
+		wdg->setObjectName(QStringLiteral("wdg"));
+		gridLayoutPic = new QGridLayout(wdg);
+		//Pour LLoyd
+		lld = new QWidget();
+		lld->setObjectName(QStringLiteral("lld"));
+		gridLayoutLld = new QGridLayout(lld);
+
+		// init scene
+		viewer = new GlViewer(lld);
+		viewer->setObjectName(QStringLiteral("viewer"));
+		viewer->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
+
 
         MainWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QStringLiteral("statusbar"));
         MainWindow->setStatusBar(statusbar);
+
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QStringLiteral("menubar"));
         menubar->setGeometry(QRect(0, 0, 578, 21));
 
-
-		
 
 		//menuPicture
 		menuPicture = new QMenu(menubar);
@@ -95,18 +112,26 @@ public:
 		//menuData
 		menuPoints = new QMenu(menubar);
 		menuPoints->setObjectName(QStringLiteral("menuPoints"));
+		//menuLloyd
+		menuLloyd = new QMenu(menubar);
+		menuLloyd->setObjectName(QStringLiteral("menuLloyd"));
+
 
 		MainWindow->setMenuBar(menubar);
 
 		menubar->addAction(menuPoints->menuAction());
 		menubar->addAction(menuPicture->menuAction());
+		menubar->addAction(menuLloyd->menuAction());
 
 		menuPicture->addAction(actionLoad);
+
         menuPoints->addAction(actionRandom);
 		menuPoints->addAction(actionLinear);
-		menuPoints->addAction(actionOpti);
 		menuPoints->addSeparator();
 		menuPoints->addAction(actionClear);
+
+		menuLloyd->addAction(actionOpti);
+		menuLloyd->addAction(actionLloyd);
 
         retranslateUi(MainWindow);
 
@@ -129,10 +154,12 @@ public:
 #endif // QT_NO_SHORTCUT
         actionRandom->setText(QApplication::translate("MainWindow", "Random", nullptr));
 		actionLinear->setText(QApplication::translate("MainWindow", "Linar algo for density", nullptr));
-		actionOpti->setText(QApplication::translate("MainWindow", "Farthest point optimization", nullptr));
+		actionOpti->setText(QApplication::translate("MainWindow", "Lloyd initialization", nullptr));
 		actionLoad->setText(QApplication::translate("MainWindow", "Load pic", nullptr));
+		actionLloyd->setText(QApplication::translate("MainWindow", "Lloyd iteration", nullptr));
         menuPoints->setTitle(QApplication::translate("MainWindow", "Points", nullptr));
 		menuPicture->setTitle(QApplication::translate("MainWindow", "Picture", nullptr));
+		menuLloyd->setTitle(QApplication::translate("MainWindow", "Lloyd", nullptr));
     } // retranslateUi
 
 };
