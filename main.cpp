@@ -4,7 +4,7 @@
 
 int main(int argv, char **args)
 {	
-	::ShowWindow(::GetConsoleWindow(), SW_HIDE); 
+	//::ShowWindow(::GetConsoleWindow(), SW_HIDE); 
 	// Pour ne pas afficher la console
 
 	QApplication app(argv, args);
