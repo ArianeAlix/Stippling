@@ -27,6 +27,8 @@ typedef CGAL::Delaunay_triangulation_caching_degeneracy_removal_policy_2<DT> AP;
 typedef CGAL::Voronoi_diagram_2<DT, AT, AP>                                  VD;
 typedef CGAL::Voronoi_diagram_2< DT, AT, AP >::Face_iterator  Face_iterator;
 typedef CGAL::Voronoi_diagram_2< DT, AT, AP >::Site_iterator  Site_iterator;
+typedef CGAL::Voronoi_diagram_2< DT, AT, AP >::Vertex_iterator  Vertex_iterator;
+
 // typedef for the result type of the point location
 typedef AT::Site_2                    Site_2;
 typedef AT::Point_2                   Point_2;
@@ -76,8 +78,12 @@ public slots:
 		void on_actionRandom_triggered();
 		void on_actionLoad_triggered();
 		void on_actionLinear_triggered();
+		void on_actionLinearDiff_triggered();
 		void on_actionOpti_triggered();
+		void majLloyd();
 		void on_actionLloyd_triggered();
+		void on_actionLloyd2_triggered();
+		void on_actionLloydTen_triggered();
 
 		void open_edg(const QString& filename);
 		std::vector<double> MainWindow::density_pic();

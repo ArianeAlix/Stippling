@@ -156,6 +156,12 @@ public:
 		std::cout << "done (average len: " << av_len << ")" << std::endl;
 	}
 
+	void lloyd2(std::vector<Point> points) {
+		std::cout << "Lloyd iteration...";
+		m_dt.lloyd2(m_triangles.begin(), m_triangles.end(),points);
+		std::cout << "done " << std::endl;
+	}
+
 	std::vector<double> densities()	{
 		std::cout << "Computing areas of cells...";
 		std::vector<double> densities;
