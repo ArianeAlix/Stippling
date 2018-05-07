@@ -32,9 +32,12 @@ public:
     QAction *actionClear;
     QAction *actionRandom;
 	QAction *actionLinear;
+	QAction *actionLinearDiff;
 	QAction *actionOpti;
 	QAction *actionLoad;
 	QAction *actionLloyd;
+	QAction *actionLloyd2;
+	QAction *actionLloydTen;
     QWidget *centralwidget;
 	QWidget *lld;
 	QWidget *wdg;
@@ -60,12 +63,19 @@ public:
         QIcon icon;
         icon.addFile(QStringLiteral("icons/fileNew.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionClear->setIcon(icon);
+		actionClear->setEnabled(false);
         actionRandom = new QAction(MainWindow);
         actionRandom->setObjectName(QStringLiteral("actionRandom"));
+		actionRandom->setEnabled(false);
 		actionLinear = new QAction(MainWindow);
 		actionLinear->setObjectName(QStringLiteral("actionLinear"));
+		actionLinear->setEnabled(false);
+		actionLinearDiff = new QAction(MainWindow);
+		actionLinearDiff->setObjectName(QStringLiteral("actionLinearDiff"));
+		actionLinearDiff->setEnabled(false);
 		actionOpti = new QAction(MainWindow);
 		actionOpti->setObjectName(QStringLiteral("actionOpti"));
+		actionOpti->setEnabled(false);
 
 
 		//New action : load picture
@@ -75,6 +85,13 @@ public:
 		//New action : LLoyd
 		actionLloyd = new QAction(MainWindow);
 		actionLloyd->setObjectName(QStringLiteral("actionLloyd"));
+		actionLloyd->setEnabled(false);
+		actionLloyd2 = new QAction(MainWindow);
+		actionLloyd2->setObjectName(QStringLiteral("actionLloyd2"));
+		actionLloyd2->setEnabled(false);
+		actionLloydTen = new QAction(MainWindow);
+		actionLloydTen->setObjectName(QStringLiteral("actionLloydTen"));
+		actionLloydTen->setEnabled(false);
 
 
         centralwidget = new QWidget(MainWindow);
@@ -127,11 +144,15 @@ public:
 
         menuPoints->addAction(actionRandom);
 		menuPoints->addAction(actionLinear);
+		menuPoints->addAction(actionLinearDiff);
 		menuPoints->addSeparator();
 		menuPoints->addAction(actionClear);
 
 		menuLloyd->addAction(actionOpti);
+		menuLloyd->addSeparator();
 		menuLloyd->addAction(actionLloyd);
+		menuLloyd->addAction(actionLloyd2);
+		menuLloyd->addAction(actionLloydTen);
 
         retranslateUi(MainWindow);
 
@@ -154,9 +175,12 @@ public:
 #endif // QT_NO_SHORTCUT
         actionRandom->setText(QApplication::translate("MainWindow", "Random", nullptr));
 		actionLinear->setText(QApplication::translate("MainWindow", "Linar algo for density", nullptr));
+		actionLinearDiff->setText(QApplication::translate("MainWindow", "Linar algo with diffusion", nullptr));
 		actionOpti->setText(QApplication::translate("MainWindow", "Lloyd initialization", nullptr));
 		actionLoad->setText(QApplication::translate("MainWindow", "Load pic", nullptr));
 		actionLloyd->setText(QApplication::translate("MainWindow", "Lloyd iteration", nullptr));
+		actionLloyd2->setText(QApplication::translate("MainWindow", "Lloyd iteration with density", nullptr));
+		actionLloydTen->setText(QApplication::translate("MainWindow", "10 Lloyd iterations", nullptr));
         menuPoints->setTitle(QApplication::translate("MainWindow", "Points", nullptr));
 		menuPicture->setTitle(QApplication::translate("MainWindow", "Picture", nullptr));
 		menuLloyd->setTitle(QApplication::translate("MainWindow", "Lloyd", nullptr));
