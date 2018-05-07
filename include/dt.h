@@ -162,6 +162,7 @@ public:
 		FT sum_len = (FT)0.0;
 
 		typename Dt2::Finite_vertices_iterator v;
+		
 		for (v = Dt2::finite_vertices_begin();
 			v != Dt2::finite_vertices_end();
 			v++)
@@ -180,14 +181,40 @@ public:
 		}
 
 		// clear generators and insert centroids
+
 		this->clear();
 
-		for (typename std::list<Point>::iterator it = points.begin(); it != points.end(); it++)
+		for (typename std::list<Point>::iterator it = points.begin(); it != points.end(); it++) {
+			//std::cout << it->x() << " , " << it->y() << std::endl;
 			this->insert(*it);
+		}
 
 		// returns average len of relocation vectors
 		return (double)(sum_len / (FT)points.size());
 	}
+
+
+	template <class InputIterator>
+	void lloyd2(InputIterator begin, // inside triangles
+		InputIterator end, std::vector<Point> points)
+	{
+		if (Dt2::dimension() != 2)
+			return;
+
+		 // store centroids
+
+		FT sum_len = (FT)0.0;
+
+		// clear generators and insert centroids
+		this->clear();
+
+		for (typename std::vector<Point>::iterator it = points.begin(); it != points.end(); it++) {
+			//std::cout << it->x() << " , " << it->y() << std::endl;
+			this->insert(*it);
+		}
+
+	}
+
 
 
 	// returns areas of triangles
@@ -253,19 +280,27 @@ public:
 			//return map_error;
 		}
 
+		
 		typename Dt2::Point_iterator it;
 		//Vecteur des générateurs dans le même ordre que le calcul de densité pour voronoi
 		for (it = Dt2::points_begin(); it != Dt2::points_end(); it++) {
-			std::vector<Point> cell_vide = {};
+			std::vector<Point> cell_vide = {}; //contient juste le générateur au début
 			cells.insert(std::pair<Point, std::vector<Point>>(*it, cell_vide));
+			cells[*it].push_back(*it);
 		}
 
 		for (int jj = 0; jj < h; jj++) {
 			for (int ii = 0; ii < w; ii++) {
 				Vertex_handle generateur = nearest_vertex(Point(ii, jj));
-				cells[generateur->point()].push_back(Point(ii, jj));
+				//On n'ajoute pas le point si c'est un générateur
+				std::map<Point, std::vector<Point>>::iterator it = cells.find(Point(ii, jj));
+				if (it == cells.end()){
+					//element non trouvé
+					cells[generateur->point()].push_back(Point(ii, jj));
+				}
 			}
 		}
+
 		return cells;
 	}
 
